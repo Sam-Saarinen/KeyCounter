@@ -8,3 +8,5 @@ A python script for overlaying a daily "keys pressed" counter. Intended as a sim
    - Windows: `venv\Scripts\activate`
    - Unix: `source venv/bin/activate`
 4. Install dependencies: `pip install -r requirements.txt`
+
+Alternatively, just use the uploaded .exe, which was created using `pyinstaller --onefile --windowed main.py`.
