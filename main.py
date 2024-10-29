@@ -109,6 +109,9 @@ def disable_click_through():
 # Function to start the global key listener
 def start_key_listener():
     def on_press(key):
+        # Exclude silent keys such as Shift, Control, Alt, Backspace, etc.
+        if hasattr(key, 'name') and key.name in ['shift', 'shift_l', 'shift_r', 'ctrl', 'ctrl_l', 'ctrl_r', 'alt', 'alt_gr', 'cmd', 'caps_lock', 'tab', 'esc', 'backspace']:
+            return
         window.after(0, on_key_press)  # Ensure key presses are handled on the main thread
     listener = keyboard.Listener(on_press=on_press)
     listener.start()
@@ -125,11 +128,12 @@ tray_icon = None
 def generate_tray_menu():
     menu_items = []
     if repositioning_enabled:
-        menu_items.append(pystray.MenuItem("Fix Positioning", fix_position))
+        menu_items.append(pystray.MenuItem("Disable Repositioning", fix_position))
     else:
         menu_items.append(pystray.MenuItem("Enable Repositioning", enable_repositioning))
-        if (window.winfo_x(), window.winfo_y()) != default_position:
-            menu_items.append(pystray.MenuItem("Reset Position", reset_position))
+    if (window.winfo_x(), window.winfo_y()) != default_position:
+        menu_items.append(pystray.MenuItem("Reset Position", reset_position))
+    menu_items.append(pystray.MenuItem("Reset Count", reset_count))
     menu_items.append(pystray.MenuItem("Exit", close_overlay))
     return pystray.Menu(*menu_items)
 
@@ -172,6 +176,9 @@ def reset_position(icon, item):
     window.geometry(f"+{default_position[0]}+{default_position[1]}")
     save_position()  # Save the reset position
     update_tray_icon_menu()
+
+def reset_count():
+    label['text']="0"
 
 def close_overlay(icon, item):
     icon.stop()
