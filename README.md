@@ -1,5 +1,7 @@
 # KeyCounter
-A python script for overlaying a daily "keys pressed" counter. Intended as a simple abstract productivity metric. Assumes Windows-based environment.
+A python script for overlaying a cumulative "keys pressed" counter. Intended as a simple abstract productivity metric. Assumes Windows-based environment.
+
+The overlay comes with a system tray icon that can be used to reposition (by dragging) the overlay, or to exit the program. As of right now, the program resets the count whenever it's closed. The number isn't guaranteed to display well past 10^6 key presses.
 
 ## Usage:
 1. Clone the repository
